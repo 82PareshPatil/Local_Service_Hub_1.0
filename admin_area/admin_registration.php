@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_registration'])
     <main class="flex flex-col lg:flex-row items-center justify-center gap-10 py-12 px-4">
         <!-- Illustration -->
         <div class="max-w-sm animate-fade-in-up">
-            <img src="../image/logo.png" alt="Admin Registration Illustration" class="rounded-2xl shadow-neumorph dark:shadow-neumorphDark" />
+            <img src="../image/boy.jpg" alt="Admin Registration Illustration" class="rounded-2xl shadow-neumorph dark:shadow-neumorphDark" />
         </div>
 
         <!-- Registration Card -->
