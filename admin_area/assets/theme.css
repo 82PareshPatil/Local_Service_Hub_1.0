@@ -1,0 +1,57 @@
+/* Corona‑style dark theme – tweak anytime */
+:root[data-theme='dark']{
+  --bg-1:#151926;  --bg-2:#1e2331;  --card:#131623;
+  --txt-1:#e6e9f0; --txt-2:#9ca4b6; --accent:#19d895;
+}
+:root[data-theme='light']{
+  --bg-1:#ffffff;  --bg-2:#f4f5fa;  --card:#ffffff;
+  --txt-1:#1f1f1f; --txt-2:#606672; --accent:#19a979;
+}
+
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg-2);
+  color:var(--txt-1);
+  font-family:'Inter',sans-serif;
+  transition:background .35s,color .35s;
+}
+
+/* override Bootstrap defaults quickly */
+:root{
+  --bs-body-bg: var(--bg-2);
+  --bs-body-color: var(--txt-1);
+  --bs-dark-rgb: 21,25,38;
+  --bs-primary: var(--accent);
+}
+
+/* navbar + sidebar/buttons */
+.navbar{background:var(--bg-1)!important;border-bottom:1px solid rgba(255,255,255,.05)}
+.button a,.navbar-nav .nav-link{
+  color:var(--txt-2)!important;
+  border-radius:8px;
+  transition:background .25s,color .25s;
+}
+.button a:hover,.navbar-nav .nav-link:hover,.navbar-nav .nav-link.active{
+  background:var(--accent)!important;color:#fff!important;
+}
+
+/* cards, tables, dropdowns, modals, etc.*/
+.card,.table,.list-group-item,.dropdown-menu,.modal-content{
+  background:var(--card)!important;border:none;border-radius:16px;
+  box-shadow:0 4px 14px rgba(0,0,0,.25);
+  color:var(--txt-1);
+}
+.table thead{color:var(--txt-2)}
+
+/* form controls */
+.form-control,.form-select{
+  background:var(--bg-1);color:var(--txt-1);
+  border:1px solid rgba(255,255,255,.08);
+}
+.form-control:focus,.form-select:focus{
+  border-color:var(--accent);box-shadow:0 0 0 .15rem rgba(25,216,149,.25);
+}
+
+/* small entrance animation */
+[data-fade]{opacity:0;transform:translateY(20px);transition:all .5s ease-out;}
+[data-fade].in{opacity:1;transform:none;}
