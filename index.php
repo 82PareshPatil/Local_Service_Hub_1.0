@@ -3,6 +3,7 @@
 include('includes/connect.php');
 include('./function/comman_function.php');
 session_start();
+cart();
 ?>
 
 <!DOCTYPE html>
