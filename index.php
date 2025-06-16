@@ -138,10 +138,13 @@ session_start();
                         echo "<li class='nav-item'><a class='nav-link' href='./users_area/user_registration.php'>Register</a></li>";
                     }
                     ?>
-                    <li class="nav-item">
+      <li class="nav-item">
           <a class="nav-link" href="booking.php">Booking <i class="fa-solid fa-person"></i><sup><?php cart_item(); ?></sup></a>
         </li>
-                    <li class="nav-item"><a class="nav-link" href="#">Total Price: <?php total_booking_price(); ?>/-</a></li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">Total Price: <?php total_booking_price(); ?>/-</a>
+        </li>
                     <li class="nav-item">
                         <?php
                         if (!isset($_SESSION['username'])) {
