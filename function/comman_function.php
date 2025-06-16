@@ -214,30 +214,32 @@ function get_all_sevice()
         
 
         echo "
-        
-        <div class='col-md-4 mb-2'>
- <div class='card'>
-   
-   <div class='card-inner'>
-     <!-- Front of the card (Image and Title) -->
-     <div class='card-front'>
-     <img src='./admin_area/service_images/$service_image1' class='card-img-top' alt='$service_title'>
-    
-     <h5>$service_title</h5>
-     </div>
+<div class='col-md-4 mb-2'>
+  <div class='lsh-sc-card'>
 
-     <!-- Back of the card (Details) -->
-     <div class='card-back'>
-       <p class='card-text'>$description</p>
-       <p class='card-text'>Cost: $service_cost Rs/-</p>
-       <a href='index.php?add_to_booking=$service_id' class='btn btn-info'>Booking</a>
-       <a href='service_detail.php?service_id=$service_id' class='btn btn-secondary'>View More</a>
-     </div>
-   </div>
+    <div class='lsh-sc-inner'>
+      <!-- Front -->
+      <div class='lsh-sc-front'>
+        <img src='./admin_area/service_images/$service_image1'
+             class='lsh-sc-img' alt='$service_title'>
+        <h5 class='lsh-sc-title'>$service_title</h5>
+      </div>
 
- </div>
+      <!-- Back -->
+      <div class='lsh-sc-back'>
+        <p class='lsh-sc-text'>$description</p>
+        <p class='lsh-sc-text'>Cost: $service_cost Rs/-</p>
+        <a href='index.php?add_to_booking=$service_id'
+           class='btn btn-info'>Booking</a>
+        <a href='service_detail.php?service_id=$service_id'
+           class='btn btn-secondary'>View More</a>
+      </div>
+    </div>
+
+  </div>
 </div>
 ";
+
         
       }
 }
@@ -381,45 +383,78 @@ function get_uniqe_shopname()
 function getshopname()
 {
     global $con;
-    $select_shop = "SELECT * FROM shopname"; // Removed single quotes around table name
+    $select_shop = "SELECT * FROM shopname";
     $result_shop = mysqli_query($con, $select_shop);
-    
-    if($result_shop) { // Check if the query was successful
-        
-        while($row_data = mysqli_fetch_assoc($result_shop)) {
+
+    if ($result_shop) {
+        while ($row_data = mysqli_fetch_assoc($result_shop)) {
             $shop_title = $row_data['shop_title'];
             $shop_id = $row_data['shop_id'];
-            
-            echo "<li class='nav-item'>"; // Corrected opening <li> tag
-            echo "<a href='index.php?shopname=$shop_id' class='nav-link text-light'>$shop_title</a>"; // Output shop title
-            echo "</li>"; // Corrected closing </li> tag and added <br> for line break
+
+            echo "
+            <li style='margin:8px 0; list-style:none;'>
+                <a href='index.php?shopname=$shop_id'
+                   style='
+                        display:block;
+                        padding:10px 16px;
+                        background-color:#212529;
+                        color:#f8f9fa;
+                        border-radius:8px;
+                        font-weight:500;
+                        text-decoration:none;
+                        border-left:4px solid transparent;
+                        transition:all 0.3s ease;
+                   '
+                   onmouseover=\"this.style.backgroundColor='#3f3f64'; this.style.borderLeft='4px solid #8a2be2'; this.style.transform='scale(1.02)';\"
+                   onmouseout=\"this.style.backgroundColor='#212529'; this.style.borderLeft='4px solid transparent'; this.style.transform='scale(1)';\"
+                >
+                    $shop_title
+                </a>
+            </li>";
         }
     } else {
         echo "Error executing query: " . mysqli_error($con);
     }
 }
 
-// display categories
+
 function getcategory()
 {
     global $con;
-$select_categories = "SELECT * FROM categories"; // Removed single quotes around table name
+    $select_categories = "SELECT * FROM categories";
     $result_categories = mysqli_query($con, $select_categories);
-    
-    if($result_categories) { // Corrected variable name in the if condition
-        
-        while($row_data = mysqli_fetch_assoc($result_categories)) {
+
+    if ($result_categories) {
+        while ($row_data = mysqli_fetch_assoc($result_categories)) {
             $category_title = $row_data['category_title'];
             $category_id = $row_data['category_id'];
-            
-            echo "<li class='nav-item'>"; // Corrected opening <li> tag
-            echo "<a href='index.php?category=$category_id' class='nav-link text-light'>$category_title</a>"; // Output shop title
-            echo "</li>"; // Corrected closing </li> tag
+
+            echo "
+            <li style='margin:8px 0; list-style:none;'>
+                <a href='index.php?category=$category_id'
+                   style='
+                        display:block;
+                        padding:10px 16px;
+                        background-color:#212529;
+                        color:#f8f9fa;
+                        border-radius:8px;
+                        font-weight:500;
+                        text-decoration:none;
+                        border-left:4px solid transparent;
+                        transition:all 0.3s ease;
+                   '
+                   onmouseover=\"this.style.backgroundColor='#3f3f64'; this.style.borderLeft='4px solid #8a2be2'; this.style.transform='scale(1.02)';\"
+                   onmouseout=\"this.style.backgroundColor='#212529'; this.style.borderLeft='4px solid transparent'; this.style.transform='scale(1)';\"
+                >
+                    $category_title
+                </a>
+            </li>";
         }
     } else {
         echo "Error executing query: " . mysqli_error($con);
     }
 }
+
 
 //serching service
 
