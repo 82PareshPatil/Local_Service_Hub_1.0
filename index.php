@@ -1,196 +1,170 @@
-<!--connect php-->
-
-<?php
-include('includes/connect.php');
-include('./function/comman_function.php');
-session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Local Service Hub</title>
-    <!--css-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!--css file-->
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body{
-      overflow-x: hidden;
-    }
-   
-  </style>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        .navbar {
+            background-color: transparent;
+        }
+        .nav-link, .navbar-brand, .nav-item a {
+            color: #e0e7ff !important;
+            font-weight: 500;
+        }
+        .nav-link:hover {
+            color: #8b5cf6 !important;
+        }
+        .logo {
+            height: 45px;
+        }
+        .btn-outline-light, .btn-primary {
+            background: linear-gradient(to right, #6366f1, #8b5cf6);
+            border: none;
+            color: white;
+            transition: 0.3s;
+        }
+        .btn-outline-light:hover {
+            background: linear-gradient(to left, #6366f1, #8b5cf6);
+        }
+        h3, h4, p {
+            color: #cbd5e1;
+        }
+        .bg-light, .bg-info, .bg-secondary {
+            background-color: #1e293b !important;
+        }
+        .card {
+            background-color: #334155;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.2);
+        }
+        .card:hover {
+            transform: scale(1.02);
+            transition: 0.3s ease;
+        }
+        .text-center {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        .form-control {
+            background-color: #1e293b;
+            color: white;
+            border: 1px solid #475569;
+        }
+        .form-control::placeholder {
+            color: #94a3b8;
+        }
+        footer {
+            background-color: #0f172a;
+            color: #cbd5e1;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .logo {
+                height: 35px;
+            }
+            .form-control {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-<!--navbar-->
 
 <div class="container-fluid p-0">
-<div class="navb">
-    <!--first child-->
- <nav class="navbar navbar-expand-lg bg-info">
-  <div class="container-fluid">
-    <img src="./image/logo.png" alt="" class="logo">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.php">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="display.php">Service</a>
-        </li>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.php"><img src="./image/logo.png" alt="logo" class="logo"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="display.php">Service</a></li>
+          <?php if(isset($_SESSION['username'])) {
+            echo "<li class='nav-item'><a class='nav-link' href='./users_area/profile.php'>My Account</a></li>";
+          } else {
+            echo "<li class='nav-item'><a class='nav-link' href='./users_area/user_registration.php'>Register</a></li>";
+          } ?>
+          <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="booking.php">Booking <i class="fa-solid fa-person"></i><sup><?php cart_item(); ?></sup></a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Total Price: <?php total_booking_price(); ?>/-</a></li>
+        </ul>
+        <form class="d-flex" action="search.php" method="get">
+          <input class="form-control me-2" type="search" placeholder="Search" name="search_data">
+          <input type="submit" value="Search" class="btn btn-outline-light" name="search_data_service">
+        </form>
+      </div>
+    </div>
+  </nav>
 
+  <!-- Welcome + Login/Logout -->
+  <nav class="navbar navbar-expand-lg">
+    <ul class="navbar-nav me-auto">
+      <?php if(!isset($_SESSION['username'])) {
+        echo "<li class='nav-item'><a class='nav-link' href='#'>Welcome Guest</a></li>";
+      } else {
+        echo "<li class='nav-item'><a class='nav-link' href='#'>Welcome ".$_SESSION['username']."</a></li>";
+      }
+      if(!isset($_SESSION['username'])) {
+        echo "<li class='nav-item'><a class='nav-link' href='./users_area/user_login.php'>Login</a></li>";
+      } else {
+        echo "<li class='nav-item'><a class='nav-link' href='./users_area/user_logout.php'>Logout</a></li>";
+      } ?>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="text-center">
+    <h3>Service</h3>
+    <p>"Connecting Communities, One Service at a Time."</p>
+  </div>
+
+  <!-- Main Content -->
+  <div class="row px-3">
+    <div class="col-md-10">
+      <div class="row">
         <?php
-         if(isset($_SESSION['username']))
-         {
-          echo  " <li class='nav-item'>
-          <a class='nav-link' href='./users_area/profile.php'>My Account</a>
-        </li>";
-         }
-         else
-         {
-         echo "<li class='nav-item'>
-          <a class='nav-link' href='./users_area/user_registration.php'>Register</a>
-        </li>";
-         }
+          getservice();
+          get_uniqe_categorires();
+          get_uniqe_shopname();
         ?>
-       
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="booking.php">Booking <i class="fa-solid fa-person"></i><sup><?php cart_item(); ?></sup></a>
-        </li>
+      </div>
+    </div>
 
-        <li class="nav-item">
-          <a class="nav-link" href="#">Total Price: <?php total_booking_price(); ?>/-</a>
-        </li>
-       
+    <!-- Sidebar -->
+    <div class="col-md-2">
+      <ul class="navbar-nav text-center">
+        <li class="nav-item"><h4 class="nav-link">Shop Name</h4></li>
+        <?php getshopname(); ?>
+        <li class="nav-item"><h4 class="nav-link">Categories</h4></li>
+        <?php getcategory(); ?>
       </ul>
-
-      <form class="d-flex"  action="search.php" method="get">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
-    <!--    <button class="btn btn-outline-light" type="submit">Search</button>  -->
-        <input type="submit" value="Search" class="btn btn-outline-light"  name="search_data_service">
-      </form>
     </div>
   </div>
-        </div>
-</nav>
 
-<!--calling cart function-->
-<?php
-cart();
-?>
-<!--second child-->
-
- <nav class="navbar navbar-expand-lg navbar-bright bg-secondary">
-    <ul class="navbar-nav me-auto">
-    
-        <?php
-        // welcome guest
-        if(!isset($_SESSION['username']))
-        {
-           echo "<li class='nav-item'>
-           <a class='nav-link' href='#'>Welcome Guest</a>
-         </li>  ";
-        }
-        else{
-         echo "<li class='nav-item'>
-           <a class='nav-link' href='#'>Welcome ".$_SESSION['username']."</a>
-         </li> "; 
-        }
-         // login and logout
-             if(!isset($_SESSION['username']))
-             {
-                echo "<li class='nav-item'>
-                <a class='nav-link' href='./users_area/user_login.php'>Login</a>
-              </li> "; 
-             }
-             else{
-              echo "<li class='nav-item'>
-                <a class='nav-link' href='./users_area/user_logout.php'>Logout</a>
-              </li> "; 
-             }
-       ?>
-    </ul>
- 
-</nav>
-
-
-<!--third child-->
-
-<div class="bg-light">
-    <h3 class="text-center">Service</h3>
-    <p class="text-center">"Connecting Communities, One Service at a Time."</p>
+  <!-- Footer -->
+  <?php include("./includes/footer.php"); ?>
 </div>
 
-<!--fourth child-->
-
-<div class="row px-3">
-    <div class="col-md-10">
-     <!--service-->
-    <div class="row">
-      
-<!--fetching service-->
-    <?php
-    // calling function
-     getservice();
-     get_uniqe_categorires();
-     get_uniqe_shopname();
-    // $ip = getIPAddress();  
-     //echo 'User Real IP Address - '.$ip;  
-    ?>
-
-        
-
-<!--row end-->
-</div>
-<!--col end-->
-         <!--sidenav-->
-
-    </div>
-
-    <div class="col-md-2 bg-secondary p-0">
-        <!--shop name-->
-
-       <ul class="navbar-nav me-auto text-center">
-        <li class="nav-iteam bg-info">
-            <a href="#" class="nav-link text-light"><h4>Shop Name</h4></a>
-        </li>
-
-        <?php
-    getshopname();
-?>   
-       </ul>
-       <!--category-->
-
-
-       <ul class="navbar-nav me-auto text-center">
-        <li class="nav-iteam bg-info">
-            <a href="#" class="nav-link text-light"><h4>categories</h4></a>
-        </li>
-        <?php
-    getcategory();
-?>
-
-       </ul>
-        </div>
-</div>
-<!--last child-->
-<!--include footer-->
-<?php
-include("./includes/footer.php")
-?>
-</div>
-
-    <!--javascript-->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
