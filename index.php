@@ -1,170 +1,282 @@
+<!-- PHP Connection and Session -->
+<?php
+include('includes/connect.php');
+include('./function/comman_function.php');
+session_start();
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Local Service Hub</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        :root[data-theme="dark"] {
+            --bg-color: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            --text-color: #ffffff;
+            --card-bg: #1e1e2f;
+            --link-color: #8a2be2;
+        }
+        :root[data-theme="light"] {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --card-bg: #f8f9fa;
+            --link-color: #5b2eff;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: #f8fafc;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
             overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
         }
         .navbar {
-            background-color: transparent;
+            background: rgba(12, 10, 50, 0.95);
         }
-        .nav-link, .navbar-brand, .nav-item a {
-            color: #e0e7ff !important;
-            font-weight: 500;
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            background: radial-gradient(circle at top left, #5b2eff, #8a2be2);
+            color: #fff;
         }
-        .nav-link:hover {
-            color: #8b5cf6 !important;
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
         }
-        .logo {
-            height: 45px;
+        .hero p {
+            font-size: 1.2rem;
         }
-        .btn-outline-light, .btn-primary {
-            background: linear-gradient(to right, #6366f1, #8b5cf6);
+        .hero .btn {
+            margin-top: 20px;
+            background-color: #8a2be2;
             border: none;
-            color: white;
-            transition: 0.3s;
+            color: #fff;
         }
-        .btn-outline-light:hover {
-            background: linear-gradient(to left, #6366f1, #8b5cf6);
-        }
-        h3, h4, p {
-            color: #cbd5e1;
-        }
-        .bg-light, .bg-info, .bg-secondary {
-            background-color: #1e293b !important;
+        .section {
+            padding: 60px 20px;
         }
         .card {
-            background-color: #334155;
-            color: white;
+            background: var(--card-bg);
             border: none;
-            border-radius: 12px;
-            box-shadow: 0 0 12px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
         }
         .card:hover {
-            transform: scale(1.02);
-            transition: 0.3s ease;
+            transform: translateY(-10px);
         }
-        .text-center {
-            margin-top: 1rem;
-            margin-bottom: 1rem;
+        .card i {
+            font-size: 2rem;
+            color: var(--link-color);
         }
-        .form-control {
-            background-color: #1e293b;
-            color: white;
-            border: 1px solid #475569;
-        }
-        .form-control::placeholder {
-            color: #94a3b8;
-        }
-        footer {
-            background-color: #0f172a;
-            color: #cbd5e1;
-            padding: 1rem 0;
+        .footer {
+            background: #0f0c29;
+            padding: 30px;
             text-align: center;
         }
-        @media (max-width: 768px) {
-            .logo {
-                height: 35px;
-            }
-            .form-control {
-                margin-bottom: 10px;
-            }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--link-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        /* Fix text color in all modes */
+       
+     
+        .card h5,
+        p.card-text,
+        .theme-toggle {
+            color: var(--text-color) !important;
+        }
+        .search-bar {
+            margin-left: 20px;
         }
     </style>
 </head>
 <body>
+    <button class="theme-toggle" onclick="toggleTheme()">Switch Theme</button>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.php">
+                <img src="./image/logo.png" alt="Local Service Hub Logo" style="height: 70px;">
+            </a>
+        <form class="d-flex"  action="search.php" method="get">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
+    <!--    <button class="btn btn-outline-light" type="submit">Search</button>  -->
+        <input type="submit" value="Search" class="btn btn-outline-light" name="search_data_service">
+      </form>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="display.php">Services</a></li>
+                    <?php
+                    if (isset($_SESSION['username'])) {
+                        echo "<li class='nav-item'><a class='nav-link' href='./users_area/profile.php'>My Account</a></li>";
+                    } else {
+                        echo "<li class='nav-item'><a class='nav-link' href='./users_area/user_registration.php'>Register</a></li>";
+                    }
+                    ?>
+                    <li class="nav-item">
+          <a class="nav-link" href="booking.php">Booking <i class="fa-solid fa-person"></i><sup><?php cart_item(); ?></sup></a>
+        </li>
+                    <li class="nav-item"><a class="nav-link" href="#">Total Price: <?php total_booking_price(); ?>/-</a></li>
+                    <li class="nav-item">
+                        <?php
+                        if (!isset($_SESSION['username'])) {
+                            echo "<a class='nav-link' href='./users_area/user_login.php'>Login</a>";
+                        } else {
+                            echo "<a class='nav-link' href='./users_area/user_logout.php'>Logout</a>";
+                        }
+                        ?>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-<div class="container-fluid p-0">
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="index.php"><img src="./image/logo.png" alt="logo" class="logo"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="display.php">Service</a></li>
-          <?php if(isset($_SESSION['username'])) {
-            echo "<li class='nav-item'><a class='nav-link' href='./users_area/profile.php'>My Account</a></li>";
-          } else {
-            echo "<li class='nav-item'><a class='nav-link' href='./users_area/user_registration.php'>Register</a></li>";
-          } ?>
-          <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-          <li class="nav-item"><a class="nav-link" href="booking.php">Booking <i class="fa-solid fa-person"></i><sup><?php cart_item(); ?></sup></a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Total Price: <?php total_booking_price(); ?>/-</a></li>
-        </ul>
-        <form class="d-flex" action="search.php" method="get">
-          <input class="form-control me-2" type="search" placeholder="Search" name="search_data">
-          <input type="submit" value="Search" class="btn btn-outline-light" name="search_data_service">
-        </form>
-      </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Connecting You to Trusted Local Services</h1>
+        <p>Plumbers, Electricians, Carpenters & more — just a tap away</p>
+        <a href="display.php" class="btn btn-lg">Get Started</a>
+    </section>
+ <!-- Top Services Carousel -->
+<section class="section text-center bg-dark text-white">
+    <div class="container">
+        <h2 class="mb-4">Top Rated Services</h2>
+        <div id="topServicesCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <h5>Electrician Services</h5>
+                    <p>Trusted professionals for wiring, lighting, and repairs.</p>
+                </div>
+                <div class="carousel-item">
+                    <h5>Plumbing Services</h5>
+                    <p>Quick fixes, installations, and emergency plumbing support.</p>
+                </div>
+                <div class="carousel-item">
+                    <h5>Home Cleaning</h5>
+                    <p>Deep cleaning, sanitization & maintenance with professionals.</p>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#topServicesCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#topServicesCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
     </div>
-  </nav>
+</section>
 
-  <!-- Welcome + Login/Logout -->
-  <nav class="navbar navbar-expand-lg">
-    <ul class="navbar-nav me-auto">
-      <?php if(!isset($_SESSION['username'])) {
-        echo "<li class='nav-item'><a class='nav-link' href='#'>Welcome Guest</a></li>";
-      } else {
-        echo "<li class='nav-item'><a class='nav-link' href='#'>Welcome ".$_SESSION['username']."</a></li>";
-      }
-      if(!isset($_SESSION['username'])) {
-        echo "<li class='nav-item'><a class='nav-link' href='./users_area/user_login.php'>Login</a></li>";
-      } else {
-        echo "<li class='nav-item'><a class='nav-link' href='./users_area/user_logout.php'>Logout</a></li>";
-      } ?>
-    </ul>
-  </nav>
+    <!-- About Section -->
+    <section class="section text-center">
+        <div class="container">
+            <h2>About Us</h2>
+            <p>Our mission is to bridge the gap between local vendors and customers through a seamless, reliable platform.</p>
+        </div>
+    </section>
 
-  <!-- Hero Section -->
-  <div class="text-center">
-    <h3>Service</h3>
-    <p>"Connecting Communities, One Service at a Time."</p>
-  </div>
+    <!-- Services Section -->
+    <section class="section text-center">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="row">
+                <?php
+                getservice();
+                get_uniqe_categorires();
+                get_uniqe_shopname();
+                ?>
+            </div>
+        </div>
+    </section>
 
-  <!-- Main Content -->
-  <div class="row px-3">
-    <div class="col-md-10">
-      <div class="row">
-        <?php
-          getservice();
-          get_uniqe_categorires();
-          get_uniqe_shopname();
-        ?>
-      </div>
-    </div>
+    <!-- Why Choose Us Section -->
+    <section class="section text-center">
+        <div class="container">
+            <h2>Why Choose Us</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card p-4">
+                        <i class="fas fa-check-circle"></i>
+                        <h5 class="mt-3">Verified Vendors</h5>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-4">
+                        <i class="fas fa-lock"></i>
+                        <h5 class="mt-3">Secure Payments</h5>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-4">
+                        <i class="fas fa-bolt"></i>
+                        <h5 class="mt-3">Fast Booking</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- Sidebar -->
-    <div class="col-md-2">
-      <ul class="navbar-nav text-center">
-        <li class="nav-item"><h4 class="nav-link">Shop Name</h4></li>
-        <?php getshopname(); ?>
-        <li class="nav-item"><h4 class="nav-link">Categories</h4></li>
-        <?php getcategory(); ?>
-      </ul>
-    </div>
-  </div>
+    <!-- Contact Section -->
+    <section class="section text-center">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <p>We'd love to hear from you! Feel free to reach out using the form below.</p>
+            <form class="row justify-content-center" action="#" method="post" style="max-width: 600px; margin: auto;">
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+                </div>
+                <div class="mb-3">
+                    <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" name="message" rows="4" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+        </div>
+    </section>
 
-  <!-- Footer -->
-  <?php include("./includes/footer.php"); ?>
-</div>
+    <!-- Footer Section -->
+    <footer class="footer">
+        <p>&copy; 2025 Local Service Hub | <a href="./users_area/user_registration.php">Register</a> | <a href="./users_area/user_login.php">Login</a></p>
+        <div>
+            <a href="#"><i class="fab fa-facebook mx-2"></i></a>
+            <a href="#"><i class="fab fa-instagram mx-2"></i></a>
+            <a href="#"><i class="fab fa-twitter mx-2"></i></a>
+        </div>
+    </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
