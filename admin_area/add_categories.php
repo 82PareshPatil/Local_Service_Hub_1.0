@@ -1,5 +1,37 @@
+
+<?php
+include('../includes/connect.php');
+if(isset($_POST['insert_cat']))
+{
+    $category_title = $_POST['cat_title'];
+
+    // Select data from database
+    $select_query = "SELECT * FROM categories WHERE category_title = '$category_title'";
+    $result_select = mysqli_query($con, $select_query);
+    if (!$result_select) {
+        die('Error: ' . mysqli_error($con)); // Add error handling
+    }
+    
+    $number = mysqli_num_rows($result_select);
+    if($number > 0)
+    {
+        echo "<script>alert('This category already exists in the database')</script>";
+    }
+    else {
+        // Insert data into database
+        $insert_query = "INSERT INTO categories (category_title) VALUES ('$category_title')";
+        $result = mysqli_query($con, $insert_query);
+        if (!$result) {
+            die('Error: ' . mysqli_error($con)); // Add error handling
+        }
+        else {
+            echo "<script>alert('Category has been Added Successfully')</script>";
+        }
+    }
+}
+?>
 <h2 class="text-center text-2xl font-semibold mb-6 text-gray-900 dark:text-white transition-colors">
-  ➕       Add Category
+  ➕  Add Category
 </h2>
 
 <form action="" method="post" class="max-w-md mx-auto bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition-colors">
