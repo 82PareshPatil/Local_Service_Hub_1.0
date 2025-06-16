@@ -1,3 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/swiper@10/swiper-bundle.min.css"/>
+
+  <style>
+      /* Custom Wrapper */
+      .custom-card-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #3b82f6, #6a5acd);
+        }
+
+        /* Card Styling */
+        .custom-card {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            padding: 20px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #3b82f6, #6a5acd);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(10px);
+            /* -webkit-backdrop-filter: blur(10px); */
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #fff;
+            /* text-align: center; */
+            overflow: hidden; /* Hide images that go outside the card */
+        }
+.swiper-pagination {
+            margin-top: 25px;
+            position: relative;
+        }
+        /* Image Slider inside Card */
+        .custom-card-swiper-container {
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        .custom-card-swiper-slide {
+            display: flex;
+            justify-content: center;
+            transition: opacity 0.5s ease; /* Smooth fade effect */
+        }
+
+        /* Image Styling */
+        .custom-card img {
+            width: 90%;
+            height: auto;
+            object-fit: cover;
+            border: 2px solid #fff;
+            border-radius: 15px;
+        }
+
+        /* Card Content */
+        .custom-card h5 {
+            font-size: 1.5rem;
+            margin: 15px 0;
+            font-weight: bold;
+            color: yellowantiquewhite; /* Golden color */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .custom-card p {
+            padding: inherit;
+            border-radius: 15px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+            background: rgba(255, 255, 255, 0.25);
+             margin-top: 40px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #f3f4f6;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            line-height: 1.4;
+        }
+
+        .custom-card .custom-card-btn,
+        .custom-card .custom-card-view-more {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 50px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .custom-card .custom-card-btn:hover,
+        .custom-card .custom-card-view-more:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .custom-card-swiper-container {
+                overflow: hidden; /* Ensure overflow is hidden on small screens */
+            }
+
+            /* On smaller screens, show only one image at a time */
+            .custom-card-swiper-container .custom-card-swiper-slide {
+                opacity: 1; /* Ensure full opacity on mobile view */
+            }
+        }
+  </style>
+</head>
+<body>
+
 <?php
 // including connect file
 //include('./includes/connect.php');
@@ -33,20 +150,32 @@ function getservice()
         $service_cost=$row['service_cost'];
         
 
-        echo "
-        
-         <div class='col-md-4 mb-2'>
-         <div class='card'>
-                 <img src='./admin_area/service_images/$service_image1' class='card-img-top' alt='$service_title'>
-                   <div class='card-body'>
-                     <h5 class='card-title'>$service_title</h5>
-                     <p class='card-text'>$description</p>
-                     <p class='card-text'>Cost: $service_cost/-</p>
-                     <a href='index.php?add_to_booking=$service_id' class='btn btn-info'>Booking</a>
-                     <a href='service_detail.php?service_id=$service_id' class='btn btn-secondary'>View More</a>
-                    </div>
-           </div>
-         </div>";
+      echo "
+<div class='col-md-3 mb-3'>
+  <div class='lsh-sc-card'>
+
+    <div class='lsh-sc-inner'>
+      <!-- Front -->
+      <div class='lsh-sc-front'>
+        <img src='./admin_area/service_images/$service_image1'
+             class='lsh-sc-img' alt='$service_title'>
+        <h5 class='lsh-sc-title'>$service_title</h5>
+      </div>
+
+      <!-- Back -->
+      <div class='lsh-sc-back'>
+        <p class='lsh-sc-text'>$description</p>
+        <p class='lsh-sc-text'>Cost: $service_cost Rs/-</p>
+        <a href='index.php?add_to_booking=$service_id' class='btn btn-info'>Booking</a>
+        <a href='service_detail.php?service_id=$service_id' class='btn btn-secondary'>View More</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+";
+
+         
         
       }
 }
@@ -84,19 +213,31 @@ function get_all_sevice()
         $service_cost=$row['service_cost'];
         
 
-        echo " <div class='col-md-4 mb-2'>
-        <div class='card'>
-                 <img src='./admin_area/service_images/$service_image1' class='card-img-top' alt='$service_title'>
-                   <div class='card-body'>
-                     <h5 class='card-title'>$service_title</h5>
-                     <p class='card-text'>$description</p>
-                     <p class='card-text'>Cost: $service_cost/-</p>
-                     <a href='index.php?add_to_booking=$service_id' class='btn btn-info'>Booking</a>
-                     <a href='service_detail.php?service_id=$service_id' class='btn btn-secondary'>View More</a>
-                     
-                    </div>
-          </div>
-         </div>";
+        echo "
+        
+        <div class='col-md-4 mb-2'>
+ <div class='card'>
+   
+   <div class='card-inner'>
+     <!-- Front of the card (Image and Title) -->
+     <div class='card-front'>
+     <img src='./admin_area/service_images/$service_image1' class='card-img-top' alt='$service_title'>
+    
+     <h5>$service_title</h5>
+     </div>
+
+     <!-- Back of the card (Details) -->
+     <div class='card-back'>
+       <p class='card-text'>$description</p>
+       <p class='card-text'>Cost: $service_cost Rs/-</p>
+       <a href='index.php?add_to_booking=$service_id' class='btn btn-info'>Booking</a>
+       <a href='service_detail.php?service_id=$service_id' class='btn btn-secondary'>View More</a>
+     </div>
+   </div>
+
+ </div>
+</div>
+";
         
       }
 }
@@ -138,20 +279,31 @@ function get_uniqe_categorires()
        $service_image3=$row['service_image3'];
         $service_cost=$row['service_cost'];
         
-
-        echo " <div class='col-md-4 mb-2'>
-        <div class='card'>
-                 <img src='./admin_area/service_images/$service_image1' class='card-img-top' alt='$service_title'>
-                   <div class='card-body'>
-                     <h5 class='card-title'>$service_title</h5>
-                     <p class='card-text'>$description</p>
-                     <p class='card-text'>Cost: $service_cost/-</p>
-                     <a href='index.php?add_to_booking=$service_id' class='btn btn-info'>Booking</a>
-                     <a href='service_detail.php?service_id=$service_id' class='btn btn-secondary'>View More</a>
-                    </div>
-          </div>
-         </div>";
+        echo "
         
+         <div class='col-md-4 mb-2'>
+  <div class='card'>
+    
+    <div class='card-inner'>
+      <!-- Front of the card (Image and Title) -->
+      <div class='card-front'>
+      <img src='./admin_area/service_images/$service_image1' class='card-img-top' alt='$service_title'>
+     
+      <h5>$service_title</h5>
+      </div>
+
+      <!-- Back of the card (Details) -->
+      <div class='card-back'>
+        <p class='card-text'>$description</p>
+        <p class='card-text'>Cost: $service_cost Rs/-</p>
+        <a href='index.php?add_to_booking=$service_id' class='btn btn-info'>Booking</a>
+        <a href='service_detail.php?service_id=$service_id' class='btn btn-secondary'>View More</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+";
       }
 }
     }
@@ -195,18 +347,31 @@ function get_uniqe_shopname()
         $service_cost=$row['service_cost'];
         
 
-        echo " <div class='col-md-4 mb-2'>
-        <div class='card'>
-                 <img src='./admin_area/service_images/$service_image1' class='card-img-top' alt='$service_title'>
-                   <div class='card-body'>
-                     <h5 class='card-title'>$service_title</h5>
-                     <p class='card-text'>$description</p>
-                     <p class='card-text'>Cost: $service_cost/-</p>
-                     <a href='index.php?add_to_booking=$service_id' class='btn btn-info'>Booking</a>
-                     <a href='service_detail.php?service_id=$service_id' class='btn btn-secondary'>View More</a>
-                    </div>
-          </div>
-         </div>";
+        echo "
+        
+        <div class='col-md-4 mb-2'>
+ <div class='card'>
+   
+   <div class='card-inner'>
+     <!-- Front of the card (Image and Title) -->
+     <div class='card-front'>
+     <img src='./admin_area/service_images/$service_image1' class='card-img-top' alt='$service_title'>
+    
+     <h5>$service_title</h5>
+     </div>
+
+     <!-- Back of the card (Details) -->
+     <div class='card-back'>
+       <p class='card-text'>$description</p>
+       <p class='card-text'>Cost: $service_cost Rs/-</p>
+       <a href='index.php?add_to_booking=$service_id' class='btn btn-info'>Booking</a>
+       <a href='service_detail.php?service_id=$service_id' class='btn btn-secondary'>View More</a>
+     </div>
+   </div>
+
+ </div>
+</div>
+";
         
       }
 }
@@ -293,24 +458,37 @@ $num_of_rows=mysqli_num_rows($result_query);
         $service_cost=$row['service_cost'];
         
 
-        echo " <div class='col-md-4 mb-2'>
-        <div class='card'>
-                 <img src='./admin_area/service_images/$service_image1' class='card-img-top' alt='$service_title'>
-                   <div class='card-body'>
-                     <h5 class='card-title'>$service_title</h5>
-                     <p class='card-text'>$description</p>
-                     <p class='card-text'>Cost: $service_cost/-</p>
-                     <a href='index.php?add_to_booking=$service_id' class='btn btn-info'>Booking</a>
-                     <a href='service_detail.php?service_id=$service_id' class='btn btn-secondary'>View More</a>
-                    </div>
-          </div>
-         </div>";
+        echo "
         
+        <div class='col-md-4 mb-2'>
+ <div class='card'>
+   
+   <div class='card-inner'>
+     <!-- Front of the card (Image and Title) -->
+     <div class='card-front'>
+     <img src='./admin_area/service_images/$service_image1' class='card-img-top' alt='$service_title'>
+    
+     <h5>$service_title</h5>
+     </div>
+
+     <!-- Back of the card (Details) -->
+     <div class='card-back'>
+       <p class='card-text'>$description</p>
+       <p class='card-text'>Cost: $service_cost Rs/-</p>
+       <a href='index.php?add_to_booking=$service_id' class='btn btn-info'>Booking</a>
+       <a href='service_detail.php?service_id=$service_id' class='btn btn-secondary'>View More</a>
+     </div>
+   </div>
+
+ </div>
+</div>
+";
       }
 }
 } 
 
 // view more function
+
 
 function veiw_more()
 {
@@ -324,7 +502,7 @@ function veiw_more()
          if(!isset($_GET['shopname']))
          {
     $service_id=$_GET['service_id'];
-    $select_query="SELECT * FROM `service` where service_id=$service_id";
+    $select_query="SELECT * FROM service where service_id=$service_id";
       $result_query=mysqli_query($con,$select_query);
      // $row=mysqli_fetch_assoc($result_query);
       //echo $row['service_title'];
@@ -343,62 +521,66 @@ function veiw_more()
         $service_cost=$row['service_cost'];
         
 
-        echo " <div class='col-md-8 mb-2'>
-                 <div class='card1'>
-        <!--image slider start-->
-                     <div class='slider'>
-                          <div class='slides'>
-                <!--radio buttons start-->
-                <input type='radio' name='radio-btn' id='radio1'>
-                <input type='radio' name='radio-btn' id='radio2'>
-                <input type='radio' name='radio-btn' id='radio3'>
-                <!--radio buttons end-->
-                <!--slide images start-->
-                <div class='slide first'>
-                    <img src='./admin_area/service_images/$service_image1' alt='' class='card-img-top' alt='$service_title'>
-                </div>
-                <div class='slide'>
-                    <img src='./admin_area/service_images/$service_image2' alt='' class='card-img-top' alt='$service_title'>
-                </div>
-                <div class='slide'>
-                    <img src='./admin_area/service_images/$service_image3' alt='' class='card-img-top' alt='$service_title'>
-                </div>
-                <!--slide images end-->
-                <!--automatic navigation start-->
-                <div class='navigation-auto'>
-                    <div class='auto-btn1'></div>
-                    <div class='auto-btn2'></div>
-                    <div class='auto-btn3'></div>
-                </div>
-                <!--automatic navigation end-->
-            </div>
-            <!--manual navigation start-->
-            <div class='navigation-manual'>
-                <label for='radio1' class='manual-btn'></label>
-                <label for='radio2' class='manual-btn'></label>
-                <label for='radio3' class='manual-btn'></label>
-            </div>
-            <!--manual navigation end-->
-        </div>
-        <!--image slider end-->
-    </div>
-                   <div class='card-body'>
-                     <h5 class='card-title'>$service_title</h5>
-                     <p class='card-text'>$description</p>
-                    <p class='card-text'>Address: $address</p>
-                    <p class='card-text'>Contact: $contact</p>
-                    <p class='card-text'>cost: $service_cost/-</p>
-                    <a href='index.php?add_to_booking=$service_id' class='btn btn-info'>Booking</a>
+        echo " 
+        
+   <div class='custom-card-wrapper'>
+    <div class='custom-card'>
 
-                    </div>
-          </div>
-         </div>
-         ";
+        <!-- Image Slider -->
+        <div class='custom-card-swiper-container swiper-container'>
+            <div class='swiper-wrapper'>
+                <div class='custom-card-swiper-slide swiper-slide'>
+                    <img src='./admin_area/service_images/$service_image1' alt='Image 1'>
+                </div>
+                <div class='custom-card-swiper-slide swiper-slide'>
+                    <img src='./admin_area/service_images/$service_image2' alt='Image 2'>
+                </div>
+                <div class='custom-card-swiper-slide swiper-slide'>
+                    <img src='./admin_area/service_images/$service_image3' alt='Image 3'>
+                </div>
+            </div>
+
+            <!-- Add Pagination for Images -->
+            <div class='swiper-pagination'></div>
+        </div>
+
+        <!-- Card Content -->
+        <h5 class='custom-card-title'>$service_title</h5>
+        <p class='custom-card-text'>$description</p>
+        <p class='custom-card-text'>Address: $address</p>
+        <p class='custom-card-text'>Contact: $contact</p>
+        <p class='custom-card-text' style='margin-bottom: 25px; color: papayawhip;'>Cost: $service_cost Rs./-</p>
+        <a href='index.php?add_to_booking=$service_id' class='custom-card-btn'>Booking</a>
+        <a href='./index.php' class='custom-card-view-more'>View More</a>
+    </div>
+</div>
+<script src='https://unpkg.com/swiper@10/swiper-bundle.min.js'></script>
+     <script>
+      document.querySelectorAll('*').forEach(el => {
+    el.style.overflowX = 'visible';
+});
+        const swiper = new Swiper('.custom-card-swiper-container', {
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            autoplay: {
+                delay: 2000,
+                disableOnInteraction: false,
+            },
+            spaceBetween: 20,
+            slidesPerView: 1, /* Ensures only one image is visible at a time */
+        });
+    </script>    ";
       }
       }
 }
     }
 }
+
+
+
 
 //get ip address function
 
@@ -530,3 +712,10 @@ if(!isset($_GET['edit_account']))
     }
 }
 ?>
+
+
+
+    
+  
+</body>
+</html>

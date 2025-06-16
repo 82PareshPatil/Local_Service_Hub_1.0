@@ -110,6 +110,221 @@ cart();
         .search-bar {
             margin-left: 20px;
         }
+       
+/* --- Card Container --- */
+.card1 {
+  display: flex;
+  flex-direction: row;
+  background-color: #212529;
+  color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  margin: 20px auto;
+  max-width: 900px;
+}
+
+/* --- Mobile Stacking --- */
+@media (max-width: 768px) {
+  .card1 {
+    flex-direction: column;
+  }
+}
+
+/* --- Slider Section --- */
+.slider {
+  flex: 1;
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+}
+.slides {
+  display: flex;
+  width: 300%;
+  transition: transform 1s ease;
+}
+.slide {
+  width: 100%;
+  flex-shrink: 0;
+  height: 100%;
+}
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-right: 2px solid #111;
+}
+
+/* --- Navigation --- */
+.navigation-manual, .navigation-auto {
+  position: absolute;
+  width: 100%;
+  bottom: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  z-index: 10;
+}
+.manual-btn, .auto-btn1, .auto-btn2, .auto-btn3 {
+  border: 2px solid white;
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: #6f42c1;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+/* --- Card Body --- */
+.card-body {
+  flex: 1;
+  padding: 20px;
+}
+.card-title {
+  font-size: 24px;
+  color: #fff;
+  font-weight: bold;
+}
+.card-text {
+  margin: 8px 0;
+  color: #ccc;
+}
+.badge {
+  background-color: #6f42c1;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-right: 6px;
+}
+.rating {
+  color: gold;
+  font-size: 16px;
+  margin-right: 10px;
+}
+.heart {
+  color: #6f42c1;
+  font-size: 16px;
+}
+.book-btn {
+  background-color: #6f42c1;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.book-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px #6f42c1;
+}
+
+/* ====================  SERVICE‑CARD  ==================== */
+.lsh-sc-card{
+    position:relative;
+    height:400px;
+    width:100%;
+    margin:10px 0;
+    perspective:1200px;
+    transition:ease all 2.3s;
+    overflow:hidden;
+    box-shadow:20px 20px 60px #00000041, inset -20px -20px 60px #ffffff40;
+}
+
+.lsh-sc-inner{
+    position:relative;
+    height:100%;
+    width:100%;
+    transition:transform 1.2s ease;
+    transform-style:preserve-3d;
+    box-shadow:inherit;
+}
+
+/* flip on hover */
+.lsh-sc-card:hover .lsh-sc-inner{ transform:rotateY(180deg); }
+
+/* -------- Front -------- */
+.lsh-sc-front{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    backface-visibility:hidden;
+    background:#000;
+    box-shadow:inherit;
+}
+
+.lsh-sc-img{
+    height:100%;
+    width:100%;
+    object-fit:cover;
+}
+
+.lsh-sc-title{
+    position:absolute;
+    bottom:10px;
+    left:10px;
+    width:calc(100% - 20px);
+    margin:0;
+    padding:5px 10px;
+    font-size:1.8em;
+    font-weight:600;
+    text-align:center;
+    color:rgba(0,0,0,0.8);
+    background:#fff;
+}
+
+.lsh-sc-card:hover .lsh-sc-title{ visibility:hidden; }
+
+/* -------- Back -------- */
+.lsh-sc-back{
+    position:absolute;
+    inset:0;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background:#232323;
+    color:#fff;
+    transform:rotateY(180deg);
+    backface-visibility:visible;
+    opacity:0;
+    transition:opacity .5s ease;
+    box-shadow:inherit;
+}
+
+.lsh-sc-card:hover .lsh-sc-back{ opacity:1; }
+
+.lsh-sc-text{
+    margin:10px 0;
+    font-size:1.1em;
+    font-weight:200;
+}
+
+/* optional – unify btn look inside card */
+.lsh-sc-back a.btn{
+    background:transparent;
+    border:1px solid #fff;
+    font-weight:200;
+    font-size:1.1em;
+    color:#fff;
+    padding:10px 20px;
+    margin-top:10px;
+    transition:background .5s ease,color .5s ease;
+}
+
+.lsh-sc-back a.btn:hover{
+    background:#fff;
+    color:#000;
+}
+
+
     </style>
 </head>
 <body>
@@ -281,6 +496,14 @@ cart();
             html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
         }
     </script>
+    <script>
+let counter = 0;
+let slideInterval = setInterval(() => {
+  const slides = document.querySelector('.slides');
+  counter = (counter + 1) % 3;
+  slides.style.transform = `translateX(-${counter * 100}%)`;
+}, 5000);
+</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
