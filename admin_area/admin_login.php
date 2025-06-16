@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_login'])) {
     <main class="flex flex-col lg:flex-row items-center justify-center gap-10 py-12 px-4">
         <!-- Illustration -->
         <div class="max-w-sm animate-fade-in-up">
-            <img src="../image/standing white man in glasses and blue cap.jpg" alt="Admin Login Illustration" class="rounded-2xl shadow-neumorph dark:shadow-neumorphDark" />
+            <img src="../image/login.jpg" alt="Admin Login Illustration" class="rounded-2xl shadow-neumorph dark:shadow-neumorphDark" />
         </div>
 
         <!-- Login Card -->
