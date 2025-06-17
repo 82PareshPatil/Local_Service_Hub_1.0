@@ -104,7 +104,7 @@ cart();
      
         .card h5,
         p.card-text,
-        .theme-toggle {
+        .theme-toggle, .s {
             color: var(--text-color) !important;
         }
         .search-bar {
@@ -397,12 +397,12 @@ input[type="radio"] {
 
     </div>
 
-    <div class="col-md-2 bg-secondary p-0">
+    <div class="col-md-2  p-0">
         <!--shop name-->
 
        <ul class="navbar-nav me-auto text-center">
         <li class="nav-iteam bg-#8a2be2">
-            <a href="#" class="nav-link text-light"><h4>Shop Name</h4></a>
+            <a href="#" class="s nav-link text-light"><h4>Shop Name</h4></a>
         </li>
 
         <?php
@@ -420,7 +420,7 @@ input[type="radio"] {
 
        <ul class="navbar-nav me-auto text-center">
         <li class="nav-iteam bg-#8a2be2">
-            <a href="#" class="nav-link text-light"><h4>categories</h4></a>
+            <a href="#" class="s nav-link text-light"><h4>categories</h4></a>
         </li>
         <?php
     getcategory();

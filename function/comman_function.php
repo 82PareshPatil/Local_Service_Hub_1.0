@@ -12,8 +12,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #3b82f6, #6a5acd);
+            min-height: 70vh;
+           margin: 10px;
+            
         }
 
         /* Card Styling */
@@ -23,7 +24,7 @@
             max-width: 700px;
             padding: 20px;
             border-radius: 20px;
-            background: linear-gradient(135deg, #3b82f6, #6a5acd);
+            background: linear-gradient(135deg,rgb(110, 61, 148)  , #6a5acd);
             box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
             backdrop-filter: blur(10px);
             /* -webkit-backdrop-filter: blur(10px); */
