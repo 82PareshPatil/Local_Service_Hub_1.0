@@ -43,29 +43,90 @@ if(isset($_GET['edit_account']))
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Account</title>
  
-        
+        <style>
+            <style>
+/*────────  EDIT‑ACCOUNT  ────────*/
+.lsh-ea-wrapper{
+  max-width:900px;
+  margin:0 auto;
+  padding:2rem 1rem;
+  background:rgba(255,255,255,0.04);
+  backdrop-filter:blur(14px);
+  border-radius:20px;
+  box-shadow:0 8px 32px rgba(0,0,0,.45);
+}
+.lsh-ea-title{
+  font-size:2rem;
+  font-weight:600;
+  color:#00e676;
+  margin-bottom:2rem;
+  text-align:center;
+}
+.lsh-ea-form{display:flex;flex-direction:column;gap:1.4rem;}
+.lsh-ea-input{
+  background:rgba(255,255,255,0.1);
+  border:none;
+  border-radius:10px;
+  padding:.75rem 1rem;
+  font-size:0.95rem;
+  color:#fff;
+  width:100%;
+}
+.lsh-ea-input::placeholder{color:#bbb;}
+.lsh-ea-input:focus{box-shadow:0 0 0 3px rgba(124,77,255,.35);outline:none;}
+
+.lsh-ea-file{
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+}
+.lsh-ea-file input[type=file]{flex:1;}
+.lsh-ea-avatar{
+  width:180px;height:180px;
+  border-radius:12px;
+  object-fit:cover;
+  box-shadow:0 0 15px rgba(0,0,0,.4);
+}
+
+/* submit btn */
+.lsh-ea-btn{
+  background:linear-gradient(135deg,#5b5be3,#b84de4);
+  border:none;border-radius:30px;
+  color:#fff;font-weight:600;
+  padding:.8rem 1rem;max-width:220px;
+  align-self:center;
+  box-shadow:0 5px 15px rgba(91,91,227,.45);
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.lsh-ea-btn:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(91,91,227,.6);}
+
+/* mobile tweaks */
+@media(max-width:576px){
+  .lsh-ea-avatar{width:130px;height:130px;}
+  .lsh-ea-title{font-size:1.6rem;}
+}
+</style>
+
+        </style>
   
 </head>
 <body>
-    <h3 class="text-center text-success mb-4">Edit Account</h3>
-    <form action="" method="post" enctype="multipart/form-data" class="text-center">
-        <div class="form-outline mb-4">
-            <input type="text" class="form-control w-50 m-auto" value="<?php echo $user_name ?>" name="user_name">
-        </div>
-        <div class="form-outline mb-4">
-            <input type="email" class="form-control w-50 m-auto" value="<?php echo $user_email ?>" name="user_email">
-        </div>
-        <div class="form-outline mb-4 d-flex w-50 m-auto">
-            <input type="file" class="form-control m-auto" name="user_image">
-            <img src="./user_images/<?php echo $user_image?>" alt="" class="edit_image">
-        </div>
-        <div class="form-outline mb-4">
-            <input type="text" class="form-control w-50 m-auto" value="<?php echo $user_address ?>" name="user_address">
-        </div>
-        <div class="form-outline mb-4">
-            <input type="text" class="form-control w-50 m-auto" value="<?php echo $user_mobile ?>" name="user_mobile">
-        </div>
-        <input type="submit" value="Update" class="bg-info py-2 px-3 border-0" name="user_update">
-    </form>
+<h3 class="lsh-ea-title">Edit Account</h3>
+
+<form action="" method="post" enctype="multipart/form-data" class="lsh-ea-wrapper lsh-ea-form">
+
+  <input type="text"     name="user_name"  class="lsh-ea-input" value="<?php echo $user_name; ?>"  placeholder="Username">
+  <input type="email"    name="user_email" class="lsh-ea-input" value="<?php echo $user_email; ?>" placeholder="Email">
+
+  <div class="lsh-ea-file">
+    <input type="file" name="user_image" class="lsh-ea-input">
+    <img src="./user_images/<?php echo $user_image; ?>" class="lsh-ea-avatar">
+  </div>
+
+  <input type="text"  name="user_address" class="lsh-ea-input" value="<?php echo $user_address; ?>" placeholder="Address">
+  <input type="text"  name="user_mobile"  class="lsh-ea-input" value="<?php echo $user_mobile; ?>"  placeholder="Mobile">
+
+  <button type="submit" name="user_update" class="lsh-ea-btn">Update</button>
+
+</form>
+
 </body>
 </html>

@@ -13,66 +13,52 @@
       $row_fetch=mysqli_fetch_assoc($result);
       $user_id=$row_fetch['user_id'];
     ?>
-    <h3 class="text-success">All Bookings</h3>
-    <table class="table-bordered mt-5 col-md-10">
-        <thead class="bg-info">
-        <tr>
-            <th>Sr.No</th>
-            <th>Ammount Due</th>
-            <th>Total Service</th>
-            <th>Invoice Number</th>
-            <th>Date</th>
-            <th>Complete/Incomplete</th>
-            <th>Status</th>
-        </tr>
-        </thead>
-        <tbody class="bg-secondary text-light">
-            <?php
-            $get_order_details="Select * from `user_orders` where user_id=$user_id";
-            $result_order=mysqli_query($con,$get_order_details);
-            $number=1;
-            while($row_orders=mysqli_fetch_assoc($result_order))
-            {
-                $order_id=$row_orders['order_id'];
-                $ammount_due=$row_orders['ammount_due'];
-                $total_service=$row_orders['total_service'];
-                $invoice_number=$row_orders['invoice_number'];
-                $order_status=$row_orders['order_status'];
-                if($order_status=='pending')
-                {
-                    $order_status='Incomplete';
-                }
-                else
-                {
-                    $order_status='Complete';
-                }
-                $order_date=$row_orders['order_date'];
-                
-                ?>
-                <tr>
-                <td><?php echo $number;?></td>               
-                <td><?php echo $ammount_due;?></td>
-                <td><?php echo $total_service;?></td>
-                <td><?php echo $invoice_number;?></td>
-                <td><?php echo $order_date;?></td>
-                <td><?php echo$order_status;?></td>
-                
-                <?php
-                if($order_status=='Complete')
-                {
-                    echo "<td>Paid</td>";
-                }
-                else
-                {
-               echo "<td><a href='confirm_payment.php?order_id=$order_id' class='text-light'>Confirm</a></td></tr>";
-                }
-             
-                $number++;
-            
+    <h3 class="lsh-bk-tbl-title">All Bookings</h3>
+
+<div class="lsh-bk-tbl-wrapper">
+  <table class="lsh-bk-tbl">
+    <thead>
+      <tr>
+        <th>Sr No</th>
+        <th>Amount Due</th>
+        <th>Total Service</th>
+        <th>Invoice #</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php
+      $get_order_details="SELECT * FROM `user_orders` WHERE user_id=$user_id";
+      $result_order=mysqli_query($con,$get_order_details);
+      $number=1;
+      while($row_orders=mysqli_fetch_assoc($result_order)){
+        $order_id      = $row_orders['order_id'];
+        $amount_due    = $row_orders['ammount_due'];
+        $total_service = $row_orders['total_service'];
+        $invoice_number= $row_orders['invoice_number'];
+        $order_status  = $row_orders['order_status']=='pending' ? 'Incomplete' : 'Complete';
+        $order_date    = $row_orders['order_date'];
+        echo \"<tr>
+          <td>$number</td>
+          <td>₹ $amount_due</td>
+          <td>$total_service</td>
+          <td>$invoice_number</td>
+          <td>$order_date</td>
+          <td>$order_status</td>\";
+        if($order_status=='Complete'){
+          echo \"<td class='paid'>Paid</td>\";
+        }else{
+          echo \"<td><a href='confirm_payment.php?order_id=$order_id' class='confirm-link'>Confirm</a></td>\";
         }
-            ?>
-                </tr>  
-        </tbody>
-    </table>
+        echo \"</tr>\";
+        $number++;
+      }
+      ?>
+    </tbody>
+  </table>
+</div>
+
 </body>
 </html>
